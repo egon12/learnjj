@@ -1,29 +1,9 @@
+use crate::error::Error;
 use tokio::io::AsyncWriteExt;
 use tokio::net::TcpStream;
 
 pub struct Client {
     conn: Option<TcpStream>,
-}
-
-#[derive(Debug)]
-pub enum Error {
-    Io(std::io::Error),
-    Str(String),
-}
-
-impl Into<std::io::Error> for Error {
-    fn into(self) -> std::io::Error {
-        match self {
-            Error::Io(err) => err,
-            Error::Str(s) => std::io::Error::new(std::io::ErrorKind::Other, s),
-        }
-    }
-}
-
-impl From<std::io::Error> for Error {
-    fn from(e: std::io::Error) -> Error {
-        Error::Io(e)
-    }
 }
 
 impl Client {
